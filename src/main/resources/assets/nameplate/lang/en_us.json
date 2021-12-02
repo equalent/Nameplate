@@ -1,0 +1,12 @@
+{
+    "text.autoconfig.nameplate.title": "Talk Bubbles Config",
+    "text.autoconfig.nameplate.option.backgroundOpacity": "Background Opacity",
+    "text.autoconfig.nameplate.option.nameColor": "Name Color",
+    "text.autoconfig.nameplate.option.backgroundColor": "Background Color",
+    "text.autoconfig.nameplate.option.showHealth": "Show Health",
+    "text.autoconfig.nameplate.option.showLevel": "Show Level",
+    "text.autoconfig.nameplate.option.excluded_entities": "Excluded Entities",
+
+    "text.nameplate.health": "HP: %d/%d",
+    "text.nameplate.level": "§eLv.%d §7"
+}

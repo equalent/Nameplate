@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "nameplate",
+  "version": "${version}",
+  "name": "Nameplate",
+  "description": "This mod adds simple nameplates onto mobs",
+  "authors": [
+    "Globox_Z"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "MIT",
+  "icon": "assets/nameplate/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.nameplate.Nameplate"
+    ],
+    "modmenu": [
+      "net.nameplate.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "nameplate.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.5",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17",
+    "cloth-config2": ">=6.0.42"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

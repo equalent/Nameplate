@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.nameplate.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "EntityTrackerEntryMixin",
+    "MobEntityMixin",
+    "MobStrengthenerMixin"
+  ],
+  "client": [
+    "MobEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
