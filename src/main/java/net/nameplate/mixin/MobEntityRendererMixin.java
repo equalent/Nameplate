@@ -22,6 +22,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.Matrix4f;
 import net.nameplate.Nameplate;
+import net.nameplate.access.ClientAccess;
 import net.nameplate.access.MobEntityAccess;
 
 @Environment(EnvType.CLIENT)
@@ -33,31 +34,31 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
     }
 
     // Could inject into ServerBossBar and set level there
-
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", shift = Shift.AFTER))
     private void renderMixin(T mobEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int i, CallbackInfo info) {
-        if (this.isVisible(mobEntity) && ((MobEntityAccess) mobEntity).hasMobRpgLabel()) {
-            matrices.push();
-            matrices.translate(0.0D, (double) mobEntity.getHeight() + 0.5F, 0.0D);
-            matrices.multiply(this.dispatcher.getRotation());
-            matrices.scale(-0.025F, -0.025F, 0.025F);
-            Matrix4f matrix4f = matrices.peek().getPositionMatrix();
-            float o = MinecraftClient.getInstance().options.getTextBackgroundOpacity(Nameplate.CONFIG.backgroundOpacity);
-            int j = (int) (o * 255.0F) << 24;
-            TextRenderer textRenderer = this.getTextRenderer();
-            String string = mobEntity.hasCustomName() ? mobEntity.getCustomName().getString() : mobEntity.getName().getString();
-            if (Nameplate.CONFIG.showHealth) {
-                string = string + " " + new TranslatableText("text.nameplate.health", Math.round(mobEntity.getHealth()), Math.round(mobEntity.getMaxHealth())).getString();
+        if (((ClientAccess) MinecraftClient.getInstance()).showMobNameplate())
+            if (this.isVisible(mobEntity) && ((MobEntityAccess) mobEntity).hasMobRpgLabel()) {
+                matrices.push();
+                matrices.translate(0.0D, (double) mobEntity.getHeight() + 0.5F, 0.0D);
+                matrices.multiply(this.dispatcher.getRotation());
+                matrices.scale(-0.025F, -0.025F, 0.025F);
+                Matrix4f matrix4f = matrices.peek().getPositionMatrix();
+                float o = this.dispatcher.gameOptions.getTextBackgroundOpacity(Nameplate.CONFIG.backgroundOpacity);
+                int j = (int) (o * 255.0F) << 24;
+                TextRenderer textRenderer = this.getTextRenderer();
+                String string = mobEntity.hasCustomName() ? mobEntity.getCustomName().getString() : mobEntity.getName().getString();
+                if (Nameplate.CONFIG.showHealth) {
+                    string = string + " " + new TranslatableText("text.nameplate.health", Math.round(mobEntity.getHealth()), Math.round(mobEntity.getMaxHealth())).getString();
+                }
+                if (Nameplate.CONFIG.showLevel)
+                    // string = new TranslatableText("text.nameplate.level", Math.round(mobEntity.getMaxHealth() / Nameplate.CONFIG.levelDivider)).getString() + string;
+                    string = new TranslatableText("text.nameplate.level", ((MobEntityAccess) mobEntity).getMobRpgLevel()).getString() + string;
+                Text text = Text.of(string);
+                float h = (float) (-textRenderer.getWidth(text) / 2);
+                textRenderer.draw(text, h, 0.0F, Nameplate.CONFIG.nameColor, false, matrix4f, vertexConsumers, true, j, i);
+                textRenderer.draw(text, h, 0.0F, Nameplate.CONFIG.backgroundColor, false, matrix4f, vertexConsumers, false, 0, i);
+                matrices.pop();
             }
-            if (Nameplate.CONFIG.showLevel)
-                // string = new TranslatableText("text.nameplate.level", Math.round(mobEntity.getMaxHealth() / Nameplate.CONFIG.levelDivider)).getString() + string;
-                string = new TranslatableText("text.nameplate.level", ((MobEntityAccess) mobEntity).getMobRpgLevel()).getString() + string;
-            Text text = Text.of(string);
-            float h = (float) (-textRenderer.getWidth(text) / 2);
-            textRenderer.draw(text, h, 0.0F, Nameplate.CONFIG.nameColor, false, matrix4f, vertexConsumers, true, j, i);
-            textRenderer.draw(text, h, 0.0F, Nameplate.CONFIG.backgroundColor, false, matrix4f, vertexConsumers, false, 0, i);
-            matrices.pop();
-        }
     }
 
     @Inject(method = "hasLabel", at = @At("HEAD"), cancellable = true)

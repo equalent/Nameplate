@@ -9,7 +9,8 @@
     "MobStrengthenerMixin"
   ],
   "client": [
-    "MobEntityRendererMixin"
+    "MobEntityRendererMixin",
+    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

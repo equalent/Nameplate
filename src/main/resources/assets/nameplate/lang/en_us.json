@@ -8,5 +8,8 @@
     "text.autoconfig.nameplate.option.excluded_entities": "Excluded Entities",
 
     "text.nameplate.health": "HP: %d/%d",
-    "text.nameplate.level": "§eLv.%d §7"
+    "text.nameplate.level": "§eLv.%d §7",
+
+    "category.nameplate.keybind": "Nameplate Keybinds",
+    "key.nameplate.shownameplate": "Toggle Nameplate"
 }

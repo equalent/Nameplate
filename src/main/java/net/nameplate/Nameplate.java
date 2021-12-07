@@ -4,6 +4,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.nameplate.config.NameplateConfig;
+import net.nameplate.key.MobKeyBind;
 import net.nameplate.network.MobLevelPacket;
 
 public class Nameplate implements ClientModInitializer {
@@ -15,6 +16,7 @@ public class Nameplate implements ClientModInitializer {
         AutoConfig.register(NameplateConfig.class, JanksonConfigSerializer::new);
         CONFIG = AutoConfig.getConfigHolder(NameplateConfig.class).getConfig();
         MobLevelPacket.init();
+        MobKeyBind.init();
     }
 
 }
