@@ -3,13 +3,14 @@
   "id": "nameplate",
   "version": "${version}",
   "name": "Nameplate",
-  "description": "This mod adds simple nameplates onto mobs",
+  "description": "This mod adds simple nameplates onto mobs to show their level",
   "authors": [
     "Globox_Z"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/nameplate",
+    "sources": "https://github.com/Globox1997/Nameplate",
+    "issues": "https://github.com/Globox1997/Nameplate/issues"
   },
   "license": "MIT",
   "icon": "assets/nameplate/icon.png",
