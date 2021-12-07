@@ -15,22 +15,22 @@ import net.rpgdifficulty.api.MobStrengthener;
 @Mixin(MobStrengthener.class)
 public class MobStrengthenerMixin {
 
-    @Inject(method = "changeAttributes", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getAttributeInstance(Lnet/minecraft/entity/attribute/EntityAttribute;)Lnet/minecraft/entity/attribute/EntityAttributeInstance;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
+    @Inject(method = "changeAttributes", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getAttributeInstance(Lnet/minecraft/entity/attribute/EntityAttribute;)Lnet/minecraft/entity/attribute/EntityAttributeInstance;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void changeAttributesMixin(MobEntity mobEntity, ServerWorld world, CallbackInfo info, double mobHealthFactor) {
         setRpgStuff(mobEntity, mobHealthFactor);
     }
 
-    @Inject(method = "changeOnlyHealthAttribute", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getAttributeInstance(Lnet/minecraft/entity/attribute/EntityAttribute;)Lnet/minecraft/entity/attribute/EntityAttributeInstance;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
+    @Inject(method = "changeOnlyHealthAttribute", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getAttributeInstance(Lnet/minecraft/entity/attribute/EntityAttribute;)Lnet/minecraft/entity/attribute/EntityAttributeInstance;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void changeOnlyHealthAttributeMixin(MobEntity mobEntity, ServerWorld world, CallbackInfo info, double mobHealthFactor) {
         setRpgStuff(mobEntity, mobHealthFactor);
     }
 
-    @Inject(method = "changeBossAttributes", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getAttributeInstance(Lnet/minecraft/entity/attribute/EntityAttribute;)Lnet/minecraft/entity/attribute/EntityAttributeInstance;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
+    @Inject(method = "changeBossAttributes", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getAttributeInstance(Lnet/minecraft/entity/attribute/EntityAttribute;)Lnet/minecraft/entity/attribute/EntityAttributeInstance;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void changeBossAttributesMixin(MobEntity mobEntity, ServerWorld world, CallbackInfo info, double mobHealthFactor) {
         setRpgStuff(mobEntity, mobHealthFactor);
     }
 
-    @Inject(method = "changeEnderDragonAttribute", at = @At("TAIL"), remap = false)
+    @Inject(method = "changeEnderDragonAttribute", at = @At("TAIL"))
     private static void changeEnderDragonAttributeMixin(MobEntity mobEntity, ServerWorld world, CallbackInfo info) {
         ((MobEntityAccess) mobEntity).setMobRpgLabel(false);
     }
