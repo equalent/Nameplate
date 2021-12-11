@@ -16,6 +16,7 @@ public class NameplateConfig implements ConfigData {
     public int backgroundColor = -1;
     public float backgroundOpacity = 0.4F;
     public boolean showHealth = false;
+    @Comment("Setting if for example WTHIT is installed")
     public boolean showLevel = true;
     public double squaredDistance = 128.0D;
     @Comment("Example: minecraft.zombie or adventurez.brown_fungus")

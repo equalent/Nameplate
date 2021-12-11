@@ -35,5 +35,11 @@
   },
   "suggests": {
     "another-mod": "*"
+  },
+  "custom": {
+    "waila:plugins": {
+      "id": "nameplate:plugin",
+      "initializer": "net.nameplate.waila.NameplateWailaPlugin"
+    }
   }
 }

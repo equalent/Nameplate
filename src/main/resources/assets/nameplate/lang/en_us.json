@@ -12,5 +12,8 @@
     "text.nameplate.level": "§eLv.%d §7",
 
     "category.nameplate.keybind": "Nameplate Keybinds",
-    "key.nameplate.shownameplate": "Toggle Nameplate"
+    "key.nameplate.shownameplate": "Toggle Nameplate",
+
+    "config.waila.plugin_nameplate": "Nameplate",
+    "config.waila.plugin_nameplate.mob_level_info": "Mob Level Info"
 }

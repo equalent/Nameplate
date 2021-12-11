@@ -14,6 +14,7 @@ repositories {
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/" }
 	maven { url 'https://jitpack.io' }
+	maven { url "https://maven.bai.lol" }
 }
 
 dependencies {
@@ -34,6 +35,8 @@ dependencies {
 	modImplementation "com.github.Globox1997:RpgDifficulty:1.18-SNAPSHOT",{
 		exclude(group: "net.fabricmc.fabric-api")
 	}
+	// Wthit
+    modCompileOnly modRuntimeOnly("mcp.mobius.waila:wthit-api:fabric-${wthit_version}")
 }
 
 processResources {

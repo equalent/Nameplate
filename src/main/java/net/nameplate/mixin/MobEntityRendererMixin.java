@@ -37,7 +37,7 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", shift = Shift.AFTER))
     private void renderMixin(T mobEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int i, CallbackInfo info) {
         // double d = this.dispatcher.getSquaredDistanceToCamera((Entity)livingEntity);
-        if (MinecraftClient.isHudEnabled() && ((ClientAccess) MinecraftClient.getInstance()).showMobNameplate()
+        if (MinecraftClient.isHudEnabled() && Nameplate.CONFIG.showLevel && ((ClientAccess) MinecraftClient.getInstance()).showMobNameplate()
                 && this.dispatcher.getSquaredDistanceToCamera(mobEntity) <= Nameplate.CONFIG.squaredDistance)
             if (this.isVisible(mobEntity) && ((MobEntityAccess) mobEntity).hasMobRpgLabel()) {
                 matrices.push();
@@ -52,9 +52,9 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
                 if (Nameplate.CONFIG.showHealth) {
                     string = string + " " + new TranslatableText("text.nameplate.health", Math.round(mobEntity.getHealth()), Math.round(mobEntity.getMaxHealth())).getString();
                 }
-                if (Nameplate.CONFIG.showLevel)
-                    // string = new TranslatableText("text.nameplate.level", Math.round(mobEntity.getMaxHealth() / Nameplate.CONFIG.levelDivider)).getString() + string;
-                    string = new TranslatableText("text.nameplate.level", ((MobEntityAccess) mobEntity).getMobRpgLevel()).getString() + string;
+                // string = new TranslatableText("text.nameplate.level", Math.round(mobEntity.getMaxHealth() / Nameplate.CONFIG.levelDivider)).getString() + string;
+                string = new TranslatableText("text.nameplate.level", ((MobEntityAccess) mobEntity).getMobRpgLevel()).getString() + string;
+
                 Text text = Text.of(string);
                 float h = (float) (-textRenderer.getWidth(text) / 2);
                 textRenderer.draw(text, h, 0.0F, Nameplate.CONFIG.nameColor, false, matrix4f, vertexConsumers, true, j, i);
