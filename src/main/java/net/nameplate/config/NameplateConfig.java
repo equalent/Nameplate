@@ -19,6 +19,6 @@ public class NameplateConfig implements ConfigData {
     @Comment("Setting if for example WTHIT is installed")
     public boolean showLevel = true;
     public double squaredDistance = 128.0D;
-    @Comment("Example: minecraft.zombie or adventurez.brown_fungus")
-    public List<String> excluded_entities = Arrays.asList("minecraft.wither", "adventurez.stone_golem", "adventurez.void_shadow", "adventurez.the_eye");
+    @Comment("Example: minecraft:zombie or adventurez:brown_fungus")
+    public List<String> excluded_entities = Arrays.asList("minecraft:wither", "adventurez:stone_golem", "adventure:void_shadow", "adventurez:the_eye");
 }

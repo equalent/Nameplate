@@ -37,9 +37,7 @@ public class MobStrengthenerMixin {
 
     private static void setRpgStuff(MobEntity mobEntity, double factor) {
         ((MobEntityAccess) mobEntity).setMobRpgLevel((int) Math.round(factor * 10.0F) - 9);
-        if (Nameplate.CONFIG.excluded_entities.contains(mobEntity.getType().toString().replace("entity.", "")))
-            ((MobEntityAccess) mobEntity).setMobRpgLabel(false);
-
+        ((MobEntityAccess) mobEntity).setMobRpgLabel(!Nameplate.CONFIG.excluded_entities.contains(mobEntity.getType().toString().replace("entity.", "").replace(".", ":")));
     }
 
 }
