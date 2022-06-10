@@ -19,7 +19,6 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.Matrix4f;
 import net.nameplate.Nameplate;
 import net.nameplate.access.ClientAccess;
@@ -36,7 +35,6 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
     // Could inject into ServerBossBar and set level there
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", shift = Shift.AFTER))
     private void renderMixin(T mobEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int i, CallbackInfo info) {
-        // double d = this.dispatcher.getSquaredDistanceToCamera((Entity)livingEntity);
         if (MinecraftClient.isHudEnabled() && Nameplate.CONFIG.showLevel && ((ClientAccess) MinecraftClient.getInstance()).showMobNameplate()
                 && this.dispatcher.getSquaredDistanceToCamera(mobEntity) <= Nameplate.CONFIG.squaredDistance)
             if (this.isVisible(mobEntity) && ((MobEntityAccess) mobEntity).hasMobRpgLabel()) {
@@ -50,10 +48,10 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
                 TextRenderer textRenderer = this.getTextRenderer();
                 String string = mobEntity.hasCustomName() ? mobEntity.getCustomName().getString() : mobEntity.getName().getString();
                 if (Nameplate.CONFIG.showHealth) {
-                    string = string + " " + new TranslatableText("text.nameplate.health", Math.round(mobEntity.getHealth()), Math.round(mobEntity.getMaxHealth())).getString();
+                    string = string + " " + Text.translatable("text.nameplate.health", Math.round(mobEntity.getHealth()), Math.round(mobEntity.getMaxHealth())).getString();
                 }
                 // string = new TranslatableText("text.nameplate.level", Math.round(mobEntity.getMaxHealth() / Nameplate.CONFIG.levelDivider)).getString() + string;
-                string = new TranslatableText("text.nameplate.level", ((MobEntityAccess) mobEntity).getMobRpgLevel()).getString() + string;
+                string = Text.translatable("text.nameplate.level", ((MobEntityAccess) mobEntity).getMobRpgLevel()).getString() + string;
 
                 Text text = Text.of(string);
                 float h = (float) (-textRenderer.getWidth(text) / 2);
