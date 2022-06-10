@@ -1,16 +1,14 @@
 package net.nameplate.waila;
 
-import java.util.List;
-
 import mcp.mobius.waila.api.IEntityAccessor;
 import mcp.mobius.waila.api.IEntityComponentProvider;
 import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.IRegistrar;
+import mcp.mobius.waila.api.ITooltip;
 import mcp.mobius.waila.api.TooltipPosition;
+import mcp.mobius.waila.api.WailaConstants;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.nameplate.access.MobEntityAccess;
 
@@ -25,9 +23,13 @@ public class NameplateWailaMobInfo extends NameplateFeature implements IEntityCo
     }
 
     @Override
-    public void appendBody(List<Text> tooltip, IEntityAccessor accessor, IPluginConfig config) {
+    public void appendBody(ITooltip tooltip, IEntityAccessor accessor, IPluginConfig config) {
+        IEntityComponentProvider.super.appendBody(tooltip, accessor, config);
+
         if (config.getBoolean(MOB_LEVEL_INFO) && ((MobEntityAccess) accessor.getEntity()).hasMobRpgLabel()) {
-            tooltip.add(new TranslatableText("text.nameplate.level", ((MobEntityAccess) accessor.getEntity()).getMobRpgLevel()).formatted(Formatting.YELLOW));
+
+            tooltip.setLine(WailaConstants.OBJECT_NAME_TAG,
+                    Text.translatable("text.nameplate.level", String.valueOf("§e" + ((MobEntityAccess) accessor.getEntity()).getMobRpgLevel()), accessor.getEntity().getName()));
         }
     }
 
