@@ -1,7 +1,6 @@
 package net.nameplate.config;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -20,5 +19,13 @@ public class NameplateConfig implements ConfigData {
     public boolean showLevel = true;
     public double squaredDistance = 128.0D;
     @Comment("Example: minecraft:zombie or adventurez:brown_fungus")
-    public List<String> excluded_entities = Arrays.asList("minecraft:wither", "adventurez:stone_golem", "adventure:void_shadow", "adventurez:the_eye");
+    public ArrayList<String> excluded_entities = new ArrayList<>() {
+        {
+            add("minecraft:ender_dragon");
+            add("minecraft:wither");
+            add("adventurez:stone_golem");
+            add("adventurez:void_shadow");
+            add("adventurez:the_eye");
+        }
+    };
 }
