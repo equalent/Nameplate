@@ -32,9 +32,9 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 	// RpgDifficulty
-	modImplementation "com.github.Globox1997:RpgDifficulty:1.19-SNAPSHOT",{
-		exclude(group: "net.fabricmc.fabric-api")
-	}
+	// modImplementation "com.github.Globox1997:RpgDifficulty:1.19-SNAPSHOT",{
+	//	 exclude(group: "net.fabricmc.fabric-api")
+	// }
 	// Wthit
     modCompileOnly modRuntimeOnly("mcp.mobius.waila:wthit-api:fabric-${wthit_version}")
 }
