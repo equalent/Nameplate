@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.mixin.object.builder.DefaultAttributeRegistryAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.EntityTrackerEntry;
@@ -21,7 +22,7 @@ import net.nameplate.Nameplate;
 import net.nameplate.access.MobEntityAccess;
 import net.nameplate.network.MobLevelPacket;
 
-@Mixin(EntityTrackerEntry.class)
+@Mixin(value = EntityTrackerEntry.class, priority = 1001)
 public class EntityTrackerEntryMixin {
 
     @Shadow
@@ -34,7 +35,8 @@ public class EntityTrackerEntryMixin {
     @Inject(method = "startTracking", at = @At(value = "TAIL"))
     public void startTrackingMixin(ServerPlayerEntity serverPlayer, CallbackInfo info) {
         if (entity instanceof MobEntity) {
-            ((MobEntityAccess) entity).setMobRpgLabel(!Nameplate.CONFIG.excluded_entities.contains(entity.getType().toString().replace("entity.", "").replace(".", ":")));
+            ((MobEntityAccess) entity).setMobRpgLabel(Nameplate.CONFIG.showHostileOnly && !(entity instanceof HostileEntity) ? false
+                    : !Nameplate.CONFIG.excluded_entities.contains(entity.getType().toString().replace("entity.", "").replace(".", ":")));
             if (((MobEntityAccess) entity).hasMobRpgLabel() && DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()) != null) {
 
                 int level = (int) ((int) Nameplate.CONFIG.levelMultiplier * (Math.round(((MobEntity) entity).getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)

@@ -19,6 +19,7 @@ public class NameplateConfig implements ConfigData {
     public boolean showHealth = false;
     @Comment("Setting if for example WTHIT is installed")
     public boolean showLevel = true;
+    public boolean showHostileOnly = false;
     public double squaredDistance = 128.0D;
     @Comment("Example: minecraft:zombie or adventurez:brown_fungus")
     public ArrayList<String> excluded_entities = new ArrayList<>() {

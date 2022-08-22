@@ -8,6 +8,7 @@
     "text.autoconfig.nameplate.option.squaredDistance": "Squared Distance",
     "text.autoconfig.nameplate.option.excluded_entities": "Excluded Entities",
     "text.autoconfig.nameplate.option.levelMultiplier": "Level Multiplier",
+    "text.autoconfig.nameplate.option.showHostileOnly": "Show Hostile Only",
 
     "text.nameplate.health": "HP: %d/%d",
     "text.nameplate.level": "§eLv.%s§r %s",
