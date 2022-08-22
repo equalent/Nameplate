@@ -11,7 +11,7 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 public class NameplateConfig implements ConfigData {
 
     @Comment("Calculates Level: Real HP / Old HP * multiplier - multiplier + 1")
-    public int levelMultiplier = 20;
+    public int levelMultiplier = 15;
     @Comment("0xAARRGGBB Format")
     public int nameColor = 553648127;
     public int backgroundColor = -1;

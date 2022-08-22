@@ -37,13 +37,14 @@ public class EntityTrackerEntryMixin {
         if (entity instanceof MobEntity) {
             ((MobEntityAccess) entity).setMobRpgLabel(Nameplate.CONFIG.showHostileOnly && !(entity instanceof HostileEntity) ? false
                     : !Nameplate.CONFIG.excluded_entities.contains(entity.getType().toString().replace("entity.", "").replace(".", ":")));
-            if (((MobEntityAccess) entity).hasMobRpgLabel() && DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()) != null) {
+            if (DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()) != null) {
 
-                int level = (int) ((int) Nameplate.CONFIG.levelMultiplier * (Math.round(((MobEntity) entity).getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
-                        / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)))))
+                int level = (int) (Nameplate.CONFIG.levelMultiplier * ((MobEntity) entity).getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
+                        / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)))
                         - Nameplate.CONFIG.levelMultiplier + 1;
                 ((MobEntityAccess) entity).setMobRpgLevel(level);
             }
+
             PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
             data.writeVarInt(((MobEntityAccess) entity).getMobRpgLevel());
             data.writeVarInt(entity.getId());
