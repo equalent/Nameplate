@@ -21,7 +21,6 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
 import net.nameplate.Nameplate;
-import net.nameplate.access.ClientAccess;
 import net.nameplate.access.MobEntityAccess;
 
 @Environment(EnvType.CLIENT)
@@ -35,9 +34,8 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
     // Could inject into ServerBossBar and set level there
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", shift = Shift.AFTER))
     private void renderMixin(T mobEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int i, CallbackInfo info) {
-        if (MinecraftClient.isHudEnabled() && Nameplate.CONFIG.showLevel && ((ClientAccess) MinecraftClient.getInstance()).showMobNameplate()
-                && this.dispatcher.getSquaredDistanceToCamera(mobEntity) <= Nameplate.CONFIG.squaredDistance)
-            if (this.isVisible(mobEntity) && ((MobEntityAccess) mobEntity).hasMobRpgLabel()) {
+        if (MinecraftClient.isHudEnabled() && Nameplate.CONFIG.showLevel && this.dispatcher.getSquaredDistanceToCamera(mobEntity) <= Nameplate.CONFIG.squaredDistance)
+            if (this.isVisible(mobEntity) && ((MobEntityAccess) mobEntity).showMobRpgLabel()) {
                 matrices.push();
                 matrices.translate(0.0D, (double) mobEntity.getHeight() + 0.5F, 0.0D);
                 matrices.multiply(this.dispatcher.getRotation());

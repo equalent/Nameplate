@@ -13,9 +13,6 @@
     "text.nameplate.health": "HP: %d/%d",
     "text.nameplate.level": "§eLv.%s§r %s",
 
-    "category.nameplate.keybind": "Nameplate Keybinds",
-    "key.nameplate.shownameplate": "Toggle Nameplate",
-
     "config.waila.plugin_nameplate": "Nameplate",
     "config.waila.plugin_nameplate.mob_level_info": "Mob Level Info"
 }

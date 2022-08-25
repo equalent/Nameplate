@@ -6,8 +6,8 @@ public interface MobEntityAccess {
 
     public int getMobRpgLevel();
 
-    public boolean hasMobRpgLabel();
+    public boolean showMobRpgLabel();
 
-    public void setMobRpgLabel(boolean setLabel);
+    public void setShowMobRpgLabel(boolean setLabel);
 
 }

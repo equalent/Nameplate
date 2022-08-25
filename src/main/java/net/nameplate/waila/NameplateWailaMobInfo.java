@@ -25,7 +25,7 @@ public class NameplateWailaMobInfo extends NameplateFeature implements IEntityCo
     @Override
     public void appendBody(ITooltip tooltip, IEntityAccessor accessor, IPluginConfig config) {
         IEntityComponentProvider.super.appendBody(tooltip, accessor, config);
-        if (config.getBoolean(MOB_LEVEL_INFO) && ((MobEntityAccess) accessor.getEntity()).hasMobRpgLabel()) {
+        if (config.getBoolean(MOB_LEVEL_INFO) && ((MobEntityAccess) accessor.getEntity()).showMobRpgLabel()) {
             tooltip.setLine(WailaConstants.OBJECT_NAME_TAG,
                     Text.translatable("text.nameplate.level", String.valueOf("§e" + ((MobEntityAccess) accessor.getEntity()).getMobRpgLevel()), accessor.getEntity().getName()));
         }

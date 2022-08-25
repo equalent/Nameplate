@@ -17,8 +17,7 @@ public class MobLevelPacket {
             client.execute(() -> {
                 if (client.world.getEntityById(mobId) != null) {
                     ((MobEntityAccess) (MobEntity) client.world.getEntityById(mobId)).setMobRpgLevel(mobLevel);
-                    if (!hasRpgLabel)
-                        ((MobEntityAccess) (MobEntity) client.world.getEntityById(mobId)).setMobRpgLabel(hasRpgLabel);
+                    ((MobEntityAccess) (MobEntity) client.world.getEntityById(mobId)).setShowMobRpgLabel(hasRpgLabel);
                 }
             });
         });

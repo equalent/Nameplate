@@ -5,26 +5,35 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.world.World;
+import net.nameplate.Nameplate;
 import net.nameplate.access.MobEntityAccess;
 
 @Mixin(MobEntity.class)
 public class MobEntityMixin implements MobEntityAccess {
 
     private int mobRpgLevel = 1;
-    private boolean hasMobRpgLabel = true;
+    private boolean showMobRpgLabel = true;
+
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void initMixin(EntityType<? extends MobEntity> entityType, World world, CallbackInfo info) {
+        if (Nameplate.CONFIG.excluded_entities.contains(((MobEntity) (Object) this).getType().toString().replace("entity.", "").replace(".", ":")))
+            this.showMobRpgLabel = false;
+    }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void writeCustomDataToNbtMixin(NbtCompound nbt, CallbackInfo info) {
         nbt.putInt("MobRpgLevel", this.mobRpgLevel);
-        nbt.putBoolean("HasMobRpgLabel", this.hasMobRpgLabel);
+        nbt.putBoolean("HasMobRpgLabel", this.showMobRpgLabel);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void readCustomDataFromNbtMixin(NbtCompound nbt, CallbackInfo info) {
         this.mobRpgLevel = nbt.getInt("MobRpgLevel");
-        this.hasMobRpgLabel = nbt.getBoolean("HasMobRpgLabel");
+        this.showMobRpgLabel = nbt.getBoolean("HasMobRpgLabel");
     }
 
     @Override
@@ -38,12 +47,12 @@ public class MobEntityMixin implements MobEntityAccess {
     }
 
     @Override
-    public boolean hasMobRpgLabel() {
-        return this.hasMobRpgLabel;
+    public boolean showMobRpgLabel() {
+        return this.showMobRpgLabel;
     }
 
     @Override
-    public void setMobRpgLabel(boolean setLabel) {
-        this.hasMobRpgLabel = setLabel;
+    public void setShowMobRpgLabel(boolean setLabel) {
+        this.showMobRpgLabel = setLabel;
     }
 }

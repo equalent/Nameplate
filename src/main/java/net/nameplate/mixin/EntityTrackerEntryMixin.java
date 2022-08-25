@@ -13,7 +13,6 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.mixin.object.builder.DefaultAttributeRegistryAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.EntityTrackerEntry;
@@ -35,21 +34,21 @@ public class EntityTrackerEntryMixin {
     @Inject(method = "startTracking", at = @At(value = "TAIL"))
     public void startTrackingMixin(ServerPlayerEntity serverPlayer, CallbackInfo info) {
         if (entity instanceof MobEntity) {
-            ((MobEntityAccess) entity).setMobRpgLabel(Nameplate.CONFIG.showHostileOnly && !(entity instanceof HostileEntity) ? false
-                    : !Nameplate.CONFIG.excluded_entities.contains(entity.getType().toString().replace("entity.", "").replace(".", ":")));
-            if (DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()) != null) {
+            // Send packet if entity should show
+            if (((MobEntityAccess) entity).showMobRpgLabel()) {
+                if (DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()) != null) {
+                    int level = (int) (Nameplate.CONFIG.levelMultiplier * ((MobEntity) entity).getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
+                            / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)))
+                            - Nameplate.CONFIG.levelMultiplier + 1;
+                    ((MobEntityAccess) entity).setMobRpgLevel(level);
+                }
 
-                int level = (int) (Nameplate.CONFIG.levelMultiplier * ((MobEntity) entity).getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
-                        / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)))
-                        - Nameplate.CONFIG.levelMultiplier + 1;
-                ((MobEntityAccess) entity).setMobRpgLevel(level);
+                PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
+                data.writeVarInt(((MobEntityAccess) entity).getMobRpgLevel());
+                data.writeVarInt(entity.getId());
+                data.writeBoolean(((MobEntityAccess) entity).showMobRpgLabel());
+                ServerPlayNetworking.send(serverPlayer, MobLevelPacket.SET_MOB_LEVEL, new PacketByteBuf(data));
             }
-
-            PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-            data.writeVarInt(((MobEntityAccess) entity).getMobRpgLevel());
-            data.writeVarInt(entity.getId());
-            data.writeBoolean(((MobEntityAccess) entity).hasMobRpgLabel());
-            ServerPlayNetworking.send(serverPlayer, MobLevelPacket.SET_MOB_LEVEL, new PacketByteBuf(data));
         }
     }
 
