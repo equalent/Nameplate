@@ -34,7 +34,7 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
     // Could inject into ServerBossBar and set level there
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", shift = Shift.AFTER))
     private void renderMixin(T mobEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int i, CallbackInfo info) {
-        if (MinecraftClient.isHudEnabled() && Nameplate.CONFIG.showLevel && this.dispatcher.getSquaredDistanceToCamera(mobEntity) <= Nameplate.CONFIG.squaredDistance)
+        if (MinecraftClient.isHudEnabled() && Nameplate.CONFIG.showLevel && this.dispatcher.getSquaredDistanceToCamera(mobEntity) <= Nameplate.CONFIG.squaredDistance && !mobEntity.hasPassengers())
             if (this.isVisible(mobEntity) && ((MobEntityAccess) mobEntity).showMobRpgLabel()) {
                 matrices.push();
                 matrices.translate(0.0D, (double) mobEntity.getHeight() + 0.5F, 0.0D);
