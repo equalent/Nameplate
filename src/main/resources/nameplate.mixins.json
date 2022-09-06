@@ -3,12 +3,14 @@
   "minVersion": "0.8",
   "package": "net.nameplate.mixin",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "net.nameplate.mixin.NameplateMixinPlugin",
   "mixins": [
     "EntityTrackerEntryMixin",
     "MobEntityMixin"
   ],
   "client": [
-    "MobEntityRendererMixin"
+    "MobEntityRendererMixin",
+    "GeoEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -15,6 +15,7 @@ repositories {
 	maven { url "https://maven.terraformersmc.com/" }
 	maven { url 'https://jitpack.io' }
 	maven { url "https://maven.bai.lol" }
+	maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 
 dependencies {
@@ -37,6 +38,8 @@ dependencies {
 	// }
 	// Wthit
     modCompileOnly ("mcp.mobius.waila:wthit-api:fabric-${wthit_version}")
+	// GeckoLib
+	modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.17'
 }
 
 processResources {
