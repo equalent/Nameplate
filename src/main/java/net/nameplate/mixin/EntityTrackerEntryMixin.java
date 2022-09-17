@@ -36,15 +36,19 @@ public class EntityTrackerEntryMixin {
         if (entity instanceof MobEntity) {
             // Send packet if entity should show
             if (((MobEntityAccess) entity).showMobRpgLabel()) {
+                int level = 1;
                 if (DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()) != null) {
-                    int level = (int) (Nameplate.CONFIG.levelMultiplier * ((MobEntity) entity).getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
+                    // Calculate mob level
+                    level = (int) (Nameplate.CONFIG.levelMultiplier * ((MobEntity) entity).getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
                             / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(((MobEntity) entity).getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)))
                             - Nameplate.CONFIG.levelMultiplier + 1;
+                    if (level < 1)
+                        level = 1;
                     ((MobEntityAccess) entity).setMobRpgLevel(level);
                 }
 
                 PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-                data.writeVarInt(((MobEntityAccess) entity).getMobRpgLevel());
+                data.writeVarInt(level);
                 data.writeVarInt(entity.getId());
                 data.writeBoolean(((MobEntityAccess) entity).showMobRpgLabel());
                 ServerPlayNetworking.send(serverPlayer, MobLevelPacket.SET_MOB_LEVEL, new PacketByteBuf(data));
