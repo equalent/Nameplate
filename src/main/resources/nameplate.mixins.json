@@ -10,7 +10,8 @@
   ],
   "client": [
     "MobEntityRendererMixin",
-    "GeoEntityRendererMixin"
+    "GeoEntityRendererMixin",
+    "GeoReplacedEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
