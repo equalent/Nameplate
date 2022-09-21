@@ -29,12 +29,12 @@ public abstract class GeoReplacedEntityRendererMixin extends EntityRenderer {
         super(ctx);
     }
 
-    @Inject(method = "Lsoftware/bernie/geckolib3/renderers/geo/GeoReplacedEntityRenderer;render(Lnet/minecraft/entity/Entity;Lsoftware/bernie/geckolib3/core/IAnimatable;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/mob/MobEntity;getHoldingEntity()Lnet/minecraft/entity/Entity;"), remap = false)
+    @Inject(method = "Lsoftware/bernie/geckolib3/renderers/geo/GeoReplacedEntityRenderer;render(Lnet/minecraft/entity/Entity;Lsoftware/bernie/geckolib3/core/IAnimatable;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/mob/MobEntity;getHoldingEntity()Lnet/minecraft/entity/Entity;"))
     private void renderMixin(Entity entity, IAnimatable animatable, float entityYaw, float partialTicks, MatrixStack stack, VertexConsumerProvider bufferIn, int packedLightIn, CallbackInfo info) {
         NameplateRender.renderNameplate(this, (MobEntity) entity, stack, bufferIn, dispatcher, this.getTextRenderer(), isVisible((MobEntity) entity), packedLightIn);
     }
 
-    @Inject(method = "hasLabel", at = @At(value = "RETURN", ordinal = 1), remap = false, cancellable = true)
+    @Inject(method = "hasLabel", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
     protected void hasLabelMixin(Entity entity, CallbackInfoReturnable<Boolean> info) {
         if (entity instanceof MobEntity)
             info.setReturnValue(false);
