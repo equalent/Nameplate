@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -32,10 +31,11 @@ public abstract class GeoEntityRendererMixin<T extends LivingEntity> extends Ent
             NameplateRender.renderNameplate(this, (MobEntity) entity, stack, bufferIn, dispatcher, this.getTextRenderer(), isVisible(entity), packedLightIn);
     }
 
-    @Inject(method = "hasLabel", at = @At(value = "RETURN", ordinal = 1), remap = false, cancellable = true)
-    protected void hasLabelMixin(T entity, CallbackInfoReturnable<Boolean> info) {
+    @Override
+    protected boolean hasLabel(T entity) {
         if (entity instanceof MobEntity)
-            info.setReturnValue(false);
+            return false;
+        return super.hasLabel(entity);
     }
 
     @Shadow(remap = false)
