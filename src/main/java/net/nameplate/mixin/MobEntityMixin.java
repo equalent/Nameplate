@@ -20,8 +20,7 @@ public class MobEntityMixin implements MobEntityAccess {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initMixin(EntityType<? extends MobEntity> entityType, World world, CallbackInfo info) {
-        if (Nameplate.CONFIG.excludedEntities.contains(((MobEntity) (Object) this).getType().toString().replace("entity.", "").replace(".", ":")))
-            this.showMobRpgLabel = false;
+        this.showMobRpgLabel = false;
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
